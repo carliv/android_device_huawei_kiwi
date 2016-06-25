@@ -131,3 +131,9 @@ sys.usb.rps_mask=10
 
 # WiFi
 wifi.interface=wlan0
+
+# carliv recovery
+ro.ctr.crypto.passwd="default_password"
+ro.ctr.forbid_format=/frp,/persistent,/log
+ro.ctr.forbid_mount=/frp,/persistent,/log
+ro.ctr.touch_accuracy=14
