@@ -7,12 +7,13 @@
 /boot	emmc	/dev/block/bootdevice/by-name/boot
 /cache	ext4	/dev/block/bootdevice/by-name/cache
 /recovery	emmc	/dev/block/bootdevice/by-name/recovery
-/system	ext4	/dev/block/bootdevice/by-name/system
-/data	ext4	/dev/block/bootdevice/by-name/userdata
-/custpack	ext4	/dev/block/bootdevice/by-name/cust
-/internal_sd	datamedia	/dev/null
-/sdcard	vfat	/dev/block/mmcblk1p1	/dev/block/mmcblk1	lun=sys/class/android_usb/android0/f_mass_storage/lun/file
-/usbdisk	auto	/dev/block/sda1	/dev/block/sda
+/system	ext4	/dev/block/bootdevice/by-name/system	fs_options=rw
+/data	ext4	/dev/block/bootdevice/by-name/userdata	fs_options=rw	length=-16384
+/cust	ext4	/dev/block/bootdevice/by-name/cust
+/sdcard	datamedia	/dev/null
+#/external_sd vfat /dev/block/mmcblk1p1 /dev/block/mmcblk1	lun=sys/class/android_usb/android0/f_mass_storage/lun/file
+/usb-otg auto /dev/block/sda1 /dev/block/sda
+#/sd-ext ext4 /dev/block/mmcblk1p2
 
 /frp	emmc	/dev/block/bootdevice/by-name/config
 /persistent	emmc	/dev/block/bootdevice/by-name/pad

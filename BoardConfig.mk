@@ -34,6 +34,9 @@ TARGET_BOARD_SUFFIX := _64
 TARGET_USES_64_BIT_BINDER := true
 TARGET_BOARD_PLATFORM := msm8916
 
+COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE
+COMMON_GLOBAL_CFLAGS += -DQCOM_BSP
+
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := MSM8916
 TARGET_NO_BOOTLOADER := true
@@ -134,26 +137,33 @@ TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 BOARD_USES_QC_TIME_SERVICES := true
 BOARD_USES_QCOM_HARDWARE := true
 
+# Time Zone data
+PRODUCT_COPY_FILES += \
+bionic/libc/zoneinfo/tzdata:recovery/root/system/usr/share/zoneinfo/tzdata
+
 # Recovery
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/fstab.qcom
-TARGET_RECOVERY_PIXEL_FORMAT := ABGR_8888
 TARGET_RECOVERY_DENSITY := xhdpi
 TARGET_USERIMAGES_USE_EXT4 := true
+BOARD_SUPPRESS_SECURE_ERASE := true
+BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
 
 RECOVERY_VARIANT := carliv
 
 # CARLIV
 ifeq ($(RECOVERY_VARIANT),carliv)
+# USB OTG and External Sdcard
+TARGET_USES_EXFAT := true
+TARGET_USES_NTFS := true
 #VIBRATOR_TIMEOUT_FILE := /sys/devices/virtual/timed_output/vibrator/enable
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"font_23x49.h\"
 DEVICE_RESOLUTION := 1080x1920
 BOARD_INCLUDE_CRYPTO := true
 # QCOMM
-RECOVERY_GRAPHICS_USE_LINELENGTH := true
-TARGET_RECOVERY_QCOM_RTC_FIX := true
-TARGET_CUSTOM_KERNEL_HEADERS := device/huawei/kiwi/include
+RECOVERY_GRAPHICS_FORCE_USE_LINELENGTH := true
 TARGET_USES_QCOM_BSP := true
 USE_NEW_ION_HEAP := true
+TOUCH_INPUT_BLACKLIST := "accelerometer"
 endif
 
 # RIL
@@ -164,6 +174,9 @@ TARGET_RIL_VARIANT := proprietary
 
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
+
+BOARD_SEPOLICY_DIRS += \
+    device/huawei/kiwi/sepolicy
 
 # Vendor Init
 TARGET_UNIFIED_DEVICE := true

@@ -1,0 +1,6 @@
+type cust_block_device, dev_type;
+type cust_file, file_type, mlstrustedobject;
+recovery_only(`
+  allow recovery cust_file:dir create_dir_perms;
+  allow recovery cust_file:file create_file_perms;
+')
